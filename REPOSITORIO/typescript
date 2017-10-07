@@ -1,0 +1,37 @@
+Script iniciado (sáb 07 oct 2017 17:14:34 -03
+)enico@B590DEBIAN871:~/_ENIEF_PREENTREGA/_PREPARANDO_CVS/REPOSITORIO$ e[Kemacs 
+0.org/                 Allrun.sh~             FcSTL/                 ploteo_presion.gp      ploteo_viscosas.gp     system/
+Allrun.sh              constant/              organizador_forces.sh  ploteo_totales.gp      RESULTADOS/            typescript
+nico@B590DEBIAN871:~/_ENIEF_PREENTREGA/_PREPARANDO_CVS/REPOSITORIO$ emacs system/controlDict
+nico@B590DEBIAN871:~/_ENIEF_PREENTREGA/_PREPARANDO_CVS/REPOSITORIO$ $CV[KO
+$COLORFGBG        $COLORTERM        $COLUMNS          $COMP_WORDBREAKS  
+nico@B590DEBIAN871:~/_ENIEF_PREENTREGA/_PREPARANDO_CVS/REPOSITORIO$ $CO[K[Kcv[K[K
+$_                                 $GIO_LAUNCHED_DESKTOP_FILE_PID     $LINES                             $RANDOM
+$BASH                              $GJS_DEBUG_OUTPUT                  $LOGNAME                           $SECONDS
+$BASH_ALIASES                      $GJS_DEBUG_TOPICS                  $MACHTYPE                          $SESSION_MANAGER
+$BASH_ARGC                         $GNOME_DESKTOP_SESSION_ID          $MAIL                              $SHELL
+$BASH_ARGV                         $GPG_AGENT_INFO                    $MAILCHECK                         $SHELLOPTS
+$BASH_CMDS                         $GROUPS                            $MC_SID                            $SHELL_SESSION_ID
+$BASH_COMMAND                      $GTK_MODULES                       $MC_TMPDIR                         $SHLVL
+$BASH_LINENO                       $HISTCMD                           $OLDPWD                            $SSH_AGENT_PID
+$BASHOPTS                          $HISTCONTROL                       $OPTERR                            $SSH_AUTH_SOCK
+$BASHPID                           $HISTFILE                          $OPTIND                            $TERM
+$BASH_SOURCE                       $HISTFILESIZE                      $OSTYPE                            $UID
+$BASH_SUBSHELL                     $HISTSIZE                          $PATH                              $USER
+$BASH_VERSINFO                     $HOME                              $PIPESTATUS                        $WINDOWID
+$BASH_VERSION                      $HOSTNAME                          $PPID                              $WINDOWPATH
+$COLORFGBG                         $HOSTTYPE                          $PROFILEHOME                       $XAUTHORITY
+$COLORTERM                         $HUSHLOGIN                         $PS1                               $XDG_CURRENT_DESKTOP
+$COLUMNS                           $IFS                               $PS2                               $XDG_DATA_DIRS
+$COMP_WORDBREAKS                   $KONSOLE_DBUS_SERVICE              $PS4                               $XDG_MENU_PREFIX
+$DBUS_SESSION_BUS_ADDRESS          $KONSOLE_DBUS_SESSION              $PWD                               $XDG_RUNTIME_DIR
+$DIRSTACK                          $KONSOLE_PROFILE_NAME              $QT_ACCESSIBILITY                  $XDG_SEAT
+$DISPLAY                           $LANG                              $QT_LINUX_ACCESSIBILITY_ALWAYS_ON  $XDG_SESSION_ID
+$EUID                              $LANGUAGE                          $QT_QPA_PLATFORM                   $XDG_VTNR
+$GIO_LAUNCHED_DESKTOP_FILE         $LINENO                            $QT_QPA_PLATFORMTHEME              
+nico@B590DEBIAN871:~/_ENIEF_PREENTREGA/_PREPARANDO_CVS/REPOSITORIO$ $
+$_                                 $GIO_LAUNCHED_DESKTOP_FILE_PID     $LINES                             $RANDOM
+$BASH                              $GJS_DEBUG_OUTPUT                  $LOGNAME                           $SECONDS
+$BASH_ALIASES                      $GJS_DEBUG_TOPICS                  $MACHTYPE                          $SESSION_MANAGER
+$BASH_ARGC                         $GNOME_DESKTOP_SESSION_ID          $MAIL                              $SHELL
+$BASH_ARGV                         $GPG_AGENT_INFO                    $MAILCHECK                         $SHELLOPT
