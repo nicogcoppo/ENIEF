@@ -78,7 +78,7 @@ function copiado_momentos {
         
     cat ${dirF} | tail -n -1 | awk '{print '${ANG}' "\t" $11 "\t" $12 "\t" $14 "\t" $15 "\t" $17 "\t" $18}' > "data_momentos.dat"  
 
-    paste -d '\t' "data_momentos.dat"  "temp_m" "temp_m_inercia" >>${FINAL}"/data_momentos.dat"
+    paste -d '\t' "data_momentos.dat"  "temp_m" "temp_m_inercia" | sed 's/- /-/g' >>${FINAL}"/data_momentos.dat"
     
 }
 
