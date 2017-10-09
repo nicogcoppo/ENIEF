@@ -27,7 +27,7 @@ set xlabel "Angulo Alfa [grados]"
 
 set ylabel "Fuerza [N]"
 
-set xrange [15:24]
+set xrange [-25:25]
 
 #set yrange [-200:-150]
 
@@ -43,7 +43,7 @@ set xlabel "Angulo Alfa [grados]"
 
 set ylabel "Fuerza [N]"
 
-set xrange [15:24]
+set xrange [-25:25]
 
 #set yrange [-200:-150]
 
@@ -60,7 +60,7 @@ set xlabel "Angulo Alfa [grados]"
 
 set ylabel "Momento [Nm]"
 
-set xrange [15:24]
+set xrange [-25:25]
 
 #set yrange [-200:-150]
 
