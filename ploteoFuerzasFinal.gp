@@ -64,7 +64,7 @@ set xrange [-25:25]
 
 #set yrange [-200:-150]
 
-plot "./GRAFICAS_FINALES/data_momentos.dat" using 1:($2+$3-$8+$11) ti "Mx" w l,"./GRAFICAS_FINALES/data_momentos.dat" using 1:($4+$5-$9+$12) ti "My" w l,"./GRAFICAS_FINALES/data_momentos.dat" using 1:($6+$7-$13) ti "Mz" w l 
+plot "./GRAFICAS_FINALES/data_momentos.dat" using 1:($2+$3-$8+$11) ti "Mx" w l,"./GRAFICAS_FINALES/data_momentos.dat" using 1:($4+$5-$9+$12) ti "My" w l,"./GRAFICAS_FINALES/data_momentos.dat" using 1:($6+$7-$10+$13) ti "Mz" w l 
 
 
 ##################### MANTENIMIENTO ###################
