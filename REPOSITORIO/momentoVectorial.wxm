@@ -1,0 +1,43 @@
+
+
+/*Variables generales*/
+
+load(vect)$
+
+fpprintprec:4$
+
+hot:0.05333333333333334$
+
+lt:0.2$
+
+alfa:ALFA_DAT$ /* grados*/
+
+fx:FX$
+
+fy:FY$
+
+fz:FZ$
+
+/*Calculo definicion plano SampleDict*/
+
+beta:alfa*%pi/180$
+
+/*Centro de rotacion*/
+
+xo:0$yo:0$
+
+/*Distancia hasta boca de tobera*/
+
+x:0$y:(-hot-lt)$
+
+/*Calculo de punto*/
+
+Px:float(x*cos(beta)-y*sin(beta)+xo)$
+
+Py:float(x*sin(beta)+y*cos(beta)+yo)$
+
+Pz:0$
+
+/* Calculo del producto vectorial */
+
+express([Px,Py,Pz]~[fx,fy,fz]);
