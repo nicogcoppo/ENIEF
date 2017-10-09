@@ -11,6 +11,6 @@ Ef():=rho*Ve*(-Ve*sin(alfa)*i+Ve*cos(alfa)*j)*Ae$
 Ixp:-subst([j=0,i=1],Ef())$
 Iyp:-subst([j=1,i=0],Ef())$
 Izp:0$
-Ixp:float(subst([As=As_,Vs=Vs_,alfa=15*%pi/180,Ae=Ae_,De=De_,Ds=Ds_,Ve=Ve_,rho=rho_],Ixp));
-Iyp:float(subst([As=As_,Vs=Vs_,alfa=15*%pi/180,Ae=Ae_,De=De_,Ds=Ds_,Ve=Ve_,rho=rho_],Iyp));
+Ixp:float(subst([As=As_,Vs=Vs_,alfa=ALFA*%pi/180,Ae=Ae_,De=De_,Ds=Ds_,Ve=Ve_,rho=rho_],Ixp));
+Iyp:float(subst([As=As_,Vs=Vs_,alfa=ALFA*%pi/180,Ae=Ae_,De=De_,Ds=Ds_,Ve=Ve_,rho=rho_],Iyp));
 Izp;
