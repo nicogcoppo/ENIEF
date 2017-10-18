@@ -13,6 +13,9 @@ declare var
 
 declare -r ALFA="$1"
 
+declare -r LIMITE_ITER="1100"
+
+declare -r delta_limite_inf="$2"
 
 # / / / Directorios
 
@@ -26,6 +29,8 @@ declare -r TRI="./constant/triSurface/"
 declare -r temp="./temporal/"
 
 declare -r BLO="./constant/polyMesh/blockMeshDict"
+
+declare -r CDICT="./system/controlDict"
 
 declare -r REP="./_REPOSITORIO/"
 
@@ -45,11 +50,15 @@ function orientacion { ### no util
     
 }
 
+function control_solucion {
 
-function copiado {
+    test -z "$(cat log.simpleFoam | grep "Time = ${LIMITE_ITER}")" && exit 255
 
-    cp "${REP}"constant/polyMesh/blockMeshDict ./constant/polyMesh/
 }
+
+
+    
+
 
 ############## SCRIPT ##################################
 
@@ -99,7 +108,7 @@ limiteXDer="$(maxima --very-quiet --batch-string "fpprintprec:7$"${limiteXIzq}"+
 
 var="$(surfaceCheck "${TRI}"out_geometria_orientada.stl  |  grep "^Bo" | awk '{print $5}')"
 
-limiteYInf="$(maxima --very-quiet --batch-string "fpprintprec:7$"${var}"-0.1;" | tail -n +4 | sed /^[0-9]/d | sed s/[[:blank:]]//g)"
+limiteYInf="$(maxima --very-quiet --batch-string "fpprintprec:7$"${var}"-"${delta_limite_inf}";" | tail -n +4 | sed /^[0-9]/d | sed s/[[:blank:]]//g)"
 
 limiteYSup="$(maxima --very-quiet --batch-string "fpprintprec:7$"${limiteYInf}"+2;" | tail -n +4 | sed /^[0-9]/d | sed s/[[:blank:]]//g)" 
 
@@ -152,11 +161,15 @@ NY="$(cat "temp" |  tail -n -1)"  && sed -i "s/NY/${NY}/" ${SUR}
 
 sed -i "s/GPALFA/${ALFA}/" ./*.gp ## archivos de gnuplot
 
+sed -i "s/XITER/$LIMITE_ITER/" ${CDICT} ## limite maximo de iteraciones
+
 echo -e "\n\n Ejecutando simpleFoam . . ."
 
 echo "ver progreso en log.simpleFoam . . ."
 
 simpleFoam > log.simpleFoam
+
+control_solucion ## Verificacion de la solucion encontrada
 
 echo -e "\n\nPostprocesando . . ."
 

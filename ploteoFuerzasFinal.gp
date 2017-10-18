@@ -8,7 +8,7 @@
 
 set term pdfcairo color size 10cm,15cm linewidth 1
 
-set output "./GRAFICAS_FINALES/fuerzas_alfa.pdf"
+set output "./GRAFICASALES/fuerzas_alfa.pdf"
 
 ############# OPCIONES DE TIPO DE PLOTEO ###########
 
@@ -27,11 +27,15 @@ set xlabel "Angulo Alfa [grados]"
 
 set ylabel "Fuerza [N]"
 
-set xrange [-25:25]
+#set xrange [15:24]
 
-#set yrange [-200:-150]
+set yrange [-400:700]
 
-plot "./GRAFICAS_FINALES/data_fuerzas.dat" using 1:($2+$3-$8+$11) ti "Fx" w l,"./GRAFICAS_FINALES/data_fuerzas.dat" using 1:($4+$5-$9+$12) ti "Fy" w l,"./GRAFICAS_FINALES/data_fuerzas.dat" using 1:($6+$7-$13) ti "Fz" w l 
+set angles degrees
+
+a = 102.1414058371882 * pi
+
+plot "./GRAFICASALES//data_fuerzas.dat" using 1:($2+$5) ti "Fx" w l,"" using 1:($3+$6) ti "Fy" w l,"" using 1:(a * sin($1)) ti "Fx Teorica" w l,"" using 1:(-a * cos($1)) ti "Fy Teorica" w l 
 
 ## /////////////////////////////////////////////////////////////
 
@@ -43,13 +47,12 @@ set xlabel "Angulo Alfa [grados]"
 
 set ylabel "Fuerza [N]"
 
-set xrange [-25:25]
+#set xrange [15:24]
 
-#set yrange [-200:-150]
+set yrange [250:400]
 
-#plot "./GRAFICAS_FINALES/data_fuerzas.dat" using (atan(($4+$5-$9+$12)/($2+$3-$8+$11))):sqrt(($4+$5-$9+$12)**2+($2+$3-$8+$11)**2) ti "Fx" w l
 
-plot "./GRAFICAS_FINALES/data_fuerzas.dat" using 1:(sqrt(($4+$5-$9+$12)**2+($2+$3-$8+$11)**2)) ti "Resultante" w l,
+plot "./GRAFICASALES/data_fuerzas.dat" using 1:(sqrt(($2+$5)**2+($3+$6)**2+($4+$7)**2)) ti "Resultante" w l,
 
 ### /////////////////////////////////////////////////////////////
 
@@ -60,11 +63,15 @@ set xlabel "Angulo Alfa [grados]"
 
 set ylabel "Momento [Nm]"
 
-set xrange [-25:25]
+#set xrange [15:24]
 
-#set yrange [-200:-150]
+set yrange [-20:20]
 
-plot "./GRAFICAS_FINALES/data_momentos.dat" using 1:($2+$3-$8+$11) ti "Mx" w l,"./GRAFICAS_FINALES/data_momentos.dat" using 1:($4+$5-$9+$12) ti "My" w l,"./GRAFICAS_FINALES/data_momentos.dat" using 1:($6+$7-$10+$13) ti "Mz" w l 
+#plot "./GRAFICASALES/data_momentos.dat" using 1:($2+$3-$8+$11) ti "Mx" w l,"./GRAFICASALES/data_momentos.dat" using 1:($4+$5-$9+$12) ti "My" w l,"./GRAFICASALES/data_momentos.dat" using 1:($6+$7-$13) ti "Mz" w l 
+
+#plot "./GRAFICASALES//data_momentos.dat" using 1:($2+$5) ti "Mx" w l,"" using 1:($3+$6) ti "My" w l,"" using 1:($4+$7) ti "Mz" w l
+
+plot "./GRAFICASALES//data_momentos.dat" using 1:($4+$7) ti "Mz" w l
 
 
 ##################### MANTENIMIENTO ###################

@@ -23,7 +23,7 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         1100; // Es el número de iteraciones
+endTime         XITER; // Es el número de iteraciones
 
 deltaT          1; // es el paso 
 
