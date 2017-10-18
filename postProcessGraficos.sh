@@ -78,7 +78,7 @@ function copiado_momentos {
         
     cat ${dirF} | tail -n -1 | awk '{print '${ANG}' "\t" $11 "\t" $12 "\t" $14 "\t" $15 "\t" $17 "\t" $18}' > "data_momentos.dat"  
 
-    paste -d '\t' "data_momentos.dat"  "temp_m" "temp_m_inercia" | sed 's/- /-/g' >>${FINAL}"/data_momentos.dat"
+    paste -d '\t' "data_momentos.dat"  "temp_m" "temp_m_inercia" >>${FINAL}"/data_momentos.dat"
     
 }
 
@@ -115,23 +115,36 @@ while (("${ANG}" <= "${LIM_SUP}")); do
    
     ACTUAL="Alfa"${ANG}"Grados"
 
-    cp ${REPO}momentoVectorial.wxm ""${ACTUAL}"/postProcessing/forces/0/momentoVectorialInerciaEntrada.wxm"
+    # cp ${REPO}momentoVectorial.wxm ""${ACTUAL}"/postProcessing/forces/0/momentoVectorialInerciaEntrada.wxm"
     
-    cp ${REPO}momentoVectorial.wxm ""${ACTUAL}"/postProcessing/forces/0/"
+    # cp ${REPO}momentoVectorial.wxm ""${ACTUAL}"/postProcessing/forces/0/"
 
-    cp ${REPO}inerciaEntrada.wxm ""${ACTUAL}"/postProcessing/forces/0/"
+    # cp ${REPO}inerciaEntrada.wxm ""${ACTUAL}"/postProcessing/forces/0/"
     
     cd ${ACTUAL} 
       
-    copiado_fuerzas
+    # copiado_fuerzas
   
-    copiado_momentos
+    # copiado_momentos
 
     copiado_yPlus
 
+    cat ${dirF} | tail -n -1 | awk '{print '${ANG}' "\t" $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8 "\t" $9 "\t" $10}' >>${FINAL}"/data_fuerzas.dat"  
+
+    cat ${dirF} | tail -n -1 | awk '{print '${ANG}' "\t" $11 "\t" $12 "\t" $13 "\t" $14 "\t" $16 "\t" $17 "\t" $18 "\t" $19 "\t" $20}' >>${FINAL}"/data_momentos.dat"  
+    
+    
     cd ${DIR} && let ANG+=1
 
 done
+
+
+echo "Ploteando . . ."
+
+gnuplot <ploteoFuerzasFinal.gp
+
+gnuplot <ploteoYPlus.gp
+
 
 ################### MANTENIMIENTO ##################
 
