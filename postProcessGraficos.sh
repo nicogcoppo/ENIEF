@@ -19,6 +19,8 @@ declare -r LIM_INF="$1"
 
 declare -r LIM_SUP="$2"
 
+declare -r PASO="$3"
+
 declare -r FINAL=""${PWD}"/GRAFICAS_FINALES/" && mkdir ${FINAL} || exit 1
 
 declare -r dirF="./postProcessing/forces/0/forces.dat"
@@ -109,10 +111,16 @@ function copiado_yPlus {
 
 ############## SCRIPT ##################################
 
+TOTAL="$(maxima --very-quiet --batch-string 'fpprintprec:7$('${LIM_SUP}'-'${LIM_INF}')/'${PASO}';' | tail -n +4 | sed /^[0-9]/d | sed s/[[:blank:]]//g | sed 's/\.0//')"
+## Cantidad Pasos 
+
+CONTADOR="0"
+
 ANG=${LIM_INF}
 
-while (("${ANG}" <= "${LIM_SUP}")); do
-   
+
+while (("${CONTADOR}" <= "${TOTAL}")); do
+	
     ACTUAL="Alfa"${ANG}"Grados"
 
     # cp ${REPO}momentoVectorial.wxm ""${ACTUAL}"/postProcessing/forces/0/momentoVectorialInerciaEntrada.wxm"
@@ -132,10 +140,14 @@ while (("${ANG}" <= "${LIM_SUP}")); do
     cat ${dirF} | tail -n -1 | awk '{print '${ANG}' "\t" $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8 "\t" $9 "\t" $10}' >>${FINAL}"/data_fuerzas.dat"  
 
     cat ${dirF} | tail -n -1 | awk '{print '${ANG}' "\t" $11 "\t" $12 "\t" $13 "\t" $14 "\t" $16 "\t" $17 "\t" $18 "\t" $19 "\t" $20}' >>${FINAL}"/data_momentos.dat"  
-    
-    
-    cd ${DIR} && let ANG+=1
+    cd ${DIR} 
 
+    VAR="$(maxima --very-quiet --batch-string "fpprintprec:7$"${ANG}"+"${PASO}";" | tail -n +4 | sed /^[0-9]/d | sed s/[[:blank:]]//g)"
+
+    ANG=$VAR
+    
+    let CONTADOR+=1
+    
 done
 
 

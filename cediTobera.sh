@@ -9,9 +9,9 @@
 
 declare -rx REP="REPOSITORIO/"
 
-declare -r LIM_SUP="22"
+declare -r LIM_SUP="23"
 
-declare -r LIM_INF="-25"
+declare -r LIM_INF="-21.5"
 
 declare -r PASO=".5"
 
@@ -19,7 +19,7 @@ declare -rx GLOBAL="${PWD}"
 
 declare -rx LOG="./log.cediTobera"
 
-declare -r delta_inferior="0.1" ## Magnitud a separar de la geometria al boundingBox creada con blockMesh
+declare -r delta_inferior="0.01" ## Magnitud a separar de la geometria al boundingBox creada con blockMesh
 
 declare DELTA
 
@@ -36,7 +36,8 @@ declare CONTADOR
 
 # Pre-procesado de corrida global
 
-TOTAL="$(maxima --very-quiet --batch-string 'fpprintprec:7$('${LIM_SUP}'-'${LIM_INF}')/'${PASO}';' | tail -n +4 | sed /^[0-9]/d | sed s/[[:blank:]]//g | sed 's/\.0//')" ## Cantidad Pasos 
+TOTAL="$(maxima --very-quiet --batch-string 'fpprintprec:7$('${LIM_SUP}'-'${LIM_INF}')/'${PASO}';' | tail -n +4 | sed /^[0-9]/d | sed s/[[:blank:]]//g | sed 's/\.0//')"
+## Cantidad Pasos 
 
 echo "Comienzo corrida global entre "${LIM_SUP}" grados y "${LIM_INF}" grados . . ." >${LOG}
 
@@ -53,7 +54,11 @@ delta_inferior_salida="${delta_inferior}" ## Comienzo con el bounding standart
 
 while (("${CONTADOR}" <= "${TOTAL}")); do
 
+    echo -e "\n-------------------------------------------------" >>${LOG}
+    
     echo -e "\nProceso local para "${ANG}" grados iniciado . . ." >>${LOG}
+
+    echo -e "\nFecha y hora : "$(date)"\n" >>${LOG}
     
     ACTUAL="Alfa"${ANG}"Grados"
 
@@ -61,7 +66,7 @@ while (("${CONTADOR}" <= "${TOTAL}")); do
 
     cd ${ACTUAL}
 
-    bash Allrun.sh "${ANG}" "${delta_inferior_salida}"
+    bash -o xtrace Allrun.sh "${ANG}" "${delta_inferior_salida}"
 
     case $? in
 
@@ -69,13 +74,15 @@ while (("${CONTADOR}" <= "${TOTAL}")); do
 
 	     rm -rf "${ACTUAL}"
 
-	     echo "Proceso local fallo para "${ANG}" grados . . ." >>${LOG}
+	     echo -e "\nProceso local fallo para "${ANG}" grados . . ." >>${LOG}
 
 	     var="${delta_inferior_salida}"
 
-	     delta_inferior_salida="$(maxima --very-quiet --batch-string "fpprintprec:7$"${var}"*1.05;" | tail -n +4 | sed /^[0-9]/d | sed s/[[:blank:]]//g)" # + 5% 
+	     delta_inferior_salida="$(maxima --very-quiet --batch-string "fpprintprec:7$"${var}"*1.005;" | tail -n +4 | sed /^[0-9]/d | sed s/[[:blank:]]//g)" # + 5% 
+
+	     echo -e "\n#################### FALLA ################" >>${LOG}
 	     
-	     echo "reintentando con delta =  ${delta_inferior_salida} . . ." >>${LOG}
+	     echo -e "\nreintentando con delta =  ${delta_inferior_salida} . . ." >>${LOG}
 
 	     ;;
 	*)
@@ -100,7 +107,7 @@ while (("${CONTADOR}" <= "${TOTAL}")); do
 done
 
 
-echo -e "\nFinalizacion corrida global entre "${LIM_SUP}" grados y "${LIM_INF}" grados . . ." >>${LOG}
+echo -e "\n\n\nFinalizacion corrida global entre "${LIM_SUP}" grados y "${LIM_INF}" grados . . ." >>${LOG}
 
 echo -e "\nFecha y hora : "$(date)"" >>${LOG}
 

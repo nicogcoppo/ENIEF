@@ -98,6 +98,8 @@ for file in "${FC}"/ascii/*.stl; do
 done
 
 
+#### Limites para blockMesh ###############
+
 echo -e "\n\nDetectando limites . . ."
 
 var="$(surfaceCheck "${TRI}"out_geometria_orientada.stl  |  grep "^Bo" | awk '{print $4}' | sed 's/(//')"
@@ -119,7 +121,29 @@ sed -i "s/XD/$limiteXDer/" ${BLO}
 
 sed -i "s/YI/$limiteYInf/" ${BLO}
 
-sed -i "s/YS/$limiteYSup/" ${BLO} 
+sed -i "s/YS/$limiteYSup/" ${BLO}
+
+###### adecuacion de parametros de control ##############
+
+sed -i "s/XITER/$LIMITE_ITER/" ${CDICT} ## limite maximo de iteraciones
+
+
+echo -e "\n Configurando Diccionarios de postProcesado . . ."
+
+sed -i "s/ALFA_DAT/${ALFA}/" "${FC}"surfaces.wxm && maxima -q -b "${FC}"surfaces.wxm | grep -v "Maxima" | grep "[0-9]$" | tail -n -4 | awk '{print $2 $3}' > "temp"
+
+# Archivos del diccionario surface
+
+PX="$(cat "temp" |  head -1)" && sed -i "s/PX/${PX}/" ${SUR}  
+PY="$(cat "temp" |  head -2 | tail -n +2)" && sed -i "s/PY/${PY}/" ${SUR}
+NX="$(cat "temp" |  head -3 | tail -n +3)" && sed -i "s/NX/${NX}/" ${SUR}
+NY="$(cat "temp" |  tail -n -1)"  && sed -i "s/NY/${NY}/" ${SUR}   
+
+sed -i "s/GPALFA/${ALFA}/" ./*.gp ## archivos de gnuplot
+
+
+
+##########  mallado OpenFOAM ##############
 
 echo -e "\n\nLimpiando polyMesh . . ." && foamCleanPolyMesh
 
@@ -148,20 +172,7 @@ echo "ver progreso en log.checkMesh . . ."
 checkMesh > log.checkMesh
 
 
-echo -e "\n Configurando Diccionarios de postProcesado . . ."
-
-sed -i "s/ALFA_DAT/${ALFA}/" "${FC}"surfaces.wxm && maxima -q -b "${FC}"surfaces.wxm | grep -v "Maxima" | grep "[0-9]$" | tail -n -4 | awk '{print $2 $3}' > "temp"
-
-# Archivos del diccionario surface
-
-PX="$(cat "temp" |  head -1)" && sed -i "s/PX/${PX}/" ${SUR}  
-PY="$(cat "temp" |  head -2 | tail -n +2)" && sed -i "s/PY/${PY}/" ${SUR}
-NX="$(cat "temp" |  head -3 | tail -n +3)" && sed -i "s/NX/${NX}/" ${SUR}
-NY="$(cat "temp" |  tail -n -1)"  && sed -i "s/NY/${NY}/" ${SUR}   
-
-sed -i "s/GPALFA/${ALFA}/" ./*.gp ## archivos de gnuplot
-
-sed -i "s/XITER/$LIMITE_ITER/" ${CDICT} ## limite maximo de iteraciones
+##########  solver OpenFOAM ##############
 
 echo -e "\n\n Ejecutando simpleFoam . . ."
 
