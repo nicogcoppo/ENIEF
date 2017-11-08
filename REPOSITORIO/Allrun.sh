@@ -13,8 +13,6 @@ declare var
 
 declare -r ALFA="$1"
 
-declare -r LIMITE_ITER="1100"
-
 declare -r delta_limite_inf="$2"
 
 # / / / Directorios
@@ -31,6 +29,8 @@ declare -r temp="./temporal/"
 declare -r BLO="./constant/polyMesh/blockMeshDict"
 
 declare -r CDICT="./system/controlDict"
+
+declare -r DPDICT="./system/decomposeParDict"
 
 declare -r REP="./_REPOSITORIO/"
 
@@ -61,6 +61,7 @@ function control_solucion {
 
 
 ############## SCRIPT ##################################
+
 
 
 echo "Creando superficies . . ."
@@ -123,10 +124,12 @@ sed -i "s/YI/$limiteYInf/" ${BLO}
 
 sed -i "s/YS/$limiteYSup/" ${BLO}
 
+
 ###### adecuacion de parametros de control ##############
 
 sed -i "s/XITER/$LIMITE_ITER/" ${CDICT} ## limite maximo de iteraciones
 
+sed -i "s/XPROCS/$PROCS/" ${DPDICT} ## limite maximo de iteraciones
 
 echo -e "\n Configurando Diccionarios de postProcesado . . ."
 
@@ -172,15 +175,22 @@ echo "ver progreso en log.checkMesh . . ."
 checkMesh > log.checkMesh
 
 
+decomposePar  # Descomposicion procesos
+
+
 ##########  solver OpenFOAM ##############
 
 echo -e "\n\n Ejecutando simpleFoam . . ."
 
 echo "ver progreso en log.simpleFoam . . ."
 
-simpleFoam > log.simpleFoam
+mpirun -np ${PROCS} simpleFoam -parallel > log.simpleFoam
 
 control_solucion ## Verificacion de la solucion encontrada
+
+reconstructPar # reconstruccion de la solucion
+
+##########  post-procesado OpenFOAM ##############
 
 echo -e "\n\nPostprocesando . . ."
 

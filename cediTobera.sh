@@ -19,6 +19,10 @@ declare -rx GLOBAL="${PWD}"
 
 declare -rx LOG="./log.cediTobera"
 
+declare -rx PROCS=2
+
+declare -rx LIMITE_ITER="700"
+
 declare -r delta_inferior="0.01" ## Magnitud a separar de la geometria al boundingBox creada con blockMesh
 
 declare DELTA
@@ -55,6 +59,8 @@ delta_inferior_salida="${delta_inferior}" ## Comienzo con el bounding standart
 while (("${CONTADOR}" <= "${TOTAL}")); do
 
     echo -e "\n-------------------------------------------------" >>${LOG}
+
+    SECONDS=0
     
     echo -e "\nProceso local para "${ANG}" grados iniciado . . ." >>${LOG}
 
@@ -82,6 +88,8 @@ while (("${CONTADOR}" <= "${TOTAL}")); do
 
 	     echo -e "\n#################### FALLA ################" >>${LOG}
 	     
+	     echo -e "\nTIEMPO DESPERDICIADO --> $(($SECONDS / 60)):$(($SECONDS - ($SECONDS / 60) * 60)) MM:SS"
+	     
 	     echo -e "\nreintentando con delta =  ${delta_inferior_salida} . . ." >>${LOG}
 
 	     ;;
@@ -95,6 +103,10 @@ while (("${CONTADOR}" <= "${TOTAL}")); do
 
 	  echo "Proceso local para "${ANG}" grados Finalizado" >>${LOG}
 
+	  echo -e "\nTIEMPO INVERTIDO --> $(($SECONDS / 60)):$(($SECONDS - ($SECONDS / 60) * 60)) MM:SS" 
+
+	  echo -e "\nTIEMPO ESTIMADO RESTANTE $((($SECONDS / 60) * $CONTADOR)) Minutos"
+	  
 	  ANG="${DELTA}"
 
 	  delta_inferior_salida="${delta_inferior}"
