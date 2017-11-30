@@ -62,42 +62,49 @@ function control_solucion {
 
 ############## SCRIPT ##################################
 
+if test -z $3; then
+    
+
+    echo "Creando superficies . . ."
+
+    
+    cd ${FC} && sed -i "s/alfa=.*/alfa=${ALFA}/g" freecadMoviles.py && freecadcmd < freecadMoviles.py && echo "Superficies creadas correctamente" || echo "Ocurrio un error en el creado de las superficies"
+
+    echo "Cargando variables . . ."
+    cd ${DIR} && source "${FOAM}" && clear || exit 1
 
 
-echo "Creando superficies . . ."
 
-rm -rf "${FC}"ascii/* "${FC}"bin/* 
+    echo "Checkeando superficies . . ."
+    for file in "${FC}"/ascii/*.stl; do
+	test -z $(surfaceCheck "${file}" | grep FATAL) && echo "Checkeo "${file}" ok . . ." || echo "Checkeo "${file}" FALLO"
+    done
 
-cd ${FC} && sed -i "s/alfa=.*/alfa=${ALFA}/g" freecadTobRot.py && freecadcmd < freecadTobRot.py && echo "Superficies creadas correctamente" || echo "Ocurrio un error en el creado de las superficies"
-
-echo "Cargando variables . . ."
-cd ${DIR} && source "${FOAM}" && clear || exit 1
-
+    echo -e "\n\nComponiendo STL general"
 
 
-echo "Checkeando superficies . . ."
-for file in "${FC}"/ascii/*.stl; do
-    test -z $(surfaceCheck "${file}" | grep FATAL) && echo "Checkeo "${file}" ok . . ." || echo "Checkeo "${file}" FALLO"
-done
+    for file in "${FC}"/ascii/*.stl; do
+	case "${file}" in
+	    *salida*)
+		cat ${file} >> ${TRI}"out_io_orientada.stl" ;;
+	    
+	    *entrada*)
+		cat ${file} >> ${TRI}"out_io_orientada.stl" ;;
 
-echo -e "\n\nComponiendo STL general"
+	    *)
+		cat ${file} >> ${TRI}"out_geometria_orientada.stl" ;;
+	esac
 
-
-for file in "${FC}"/ascii/*.stl; do
-    case "${file}" in
-	*salida*)
-	    cat ${file} >> ${TRI}"out_io_orientada.stl" ;;
 	
-	*entrada*)
-	    cat ${file} >> ${TRI}"out_io_orientada.stl" ;;
+    done
 
-	*)
-	    cat ${file} >> ${TRI}"out_geometria_orientada.stl" ;;
-    esac
     
-    
-done
 
+else
+
+    cp ${GLOBAL}/temporal/${TRI}/constant/triSurface/* ${TRI} && rm -rf ${GLOBAL}/temporal
+
+fi
 
 #### Limites para blockMesh ###############
 
