@@ -102,7 +102,7 @@ if test -z $3; then
 
 else
 
-    cp ${GLOBAL}/temporal/${TRI}/constant/triSurface/* ${TRI} && rm -rf ${GLOBAL}/temporal
+    cp ${GLOBAL}/temporal/constant/triSurface/* ${TRI} && rm -rf ${GLOBAL}/temporal
 
 fi
 
